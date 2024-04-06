@@ -1,12 +1,20 @@
-import React, { CSSProperties, ReactNode, RefObject, useEffect, useRef } from "react";
+import React, {
+    CSSProperties,
+    MouseEventHandler,
+    ReactNode,
+    RefObject,
+    useEffect,
+    useRef
+} from "react";
 
 interface Props {
     containerRef: RefObject<HTMLDivElement>;
+    onMouseDown?: MouseEventHandler<HTMLDivElement>;
     style?: CSSProperties;
     children?: ReactNode;
 }
 
-export const Bubble: React.FC<Props> = ({ containerRef, style, children }) => {
+export const Bubble: React.FC<Props> = ({ containerRef, onMouseDown, style, children }) => {
     const boxRef = useRef<HTMLDivElement>(null);
 
     const isClicked = useRef<boolean>(false);
@@ -69,7 +77,7 @@ export const Bubble: React.FC<Props> = ({ containerRef, style, children }) => {
     }, []);
 
     return (
-        <div ref={boxRef} className='draggable' style={style}>
+        <div ref={boxRef} className='draggable' onMouseDown={onMouseDown} style={style}>
             {children}
         </div>
     );

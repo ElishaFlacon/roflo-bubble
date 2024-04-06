@@ -1,12 +1,18 @@
-import React, { CSSProperties, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
 import { Bubble } from "./Bubble";
 
+interface IBubble {
+    index: number;
+    style: CSSProperties;
+    currentType: string;
+}
+
 export const App: React.FC = () => {
+    const [count, setCount] = useState(0);
     const [currentType, setCurrentType] = useState("native");
-    const [bubbles, setBubbles] = useState<
-        { index: number; style: CSSProperties; currentType: string }[]
-    >([]);
+    const [bubbles, setBubbles] = useState<IBubble[]>([]);
+    const [lastTake, setLastTake] = useState(0);
 
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -16,11 +22,17 @@ export const App: React.FC = () => {
 
         const style: CSSProperties = {
             width: `${size}%`,
-            height: `${size * 1.3}%`,
+            height: `${size * 2}%`,
             background: color
         };
 
-        setBubbles((self) => [...self, { index: self.length, style, currentType }]);
+        setCount((self) => self + 1);
+        setBubbles((self) => [...self, { index: count, style, currentType }]);
+    };
+
+    const removeBubble = (event: KeyboardEvent) => {
+        if (event.key.toLocaleLowerCase() !== "escape") return;
+        setBubbles((self) => self.filter((value) => value.index !== lastTake));
     };
 
     const randomNumber = (min: number, max: number) => {
@@ -31,6 +43,11 @@ export const App: React.FC = () => {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
         return "#" + randomColor;
     };
+
+    useEffect(() => {
+        addEventListener("keydown", removeBubble);
+        return () => removeEventListener("keydown", removeBubble);
+    });
 
     return (
         <div className='app'>
@@ -45,7 +62,9 @@ export const App: React.FC = () => {
                 </a>
             </div>
 
-            <div>Сделал 2 вариации, нативная и спомощью либы</div>
+            <div>
+                Сделал 2 вариации, нативная и спомощью либы, у нативных шариков есть куча багов))
+            </div>
 
             <div> Сейчас выбран тип: {currentType}</div>
 
@@ -67,14 +86,24 @@ export const App: React.FC = () => {
                 ЖМЯВ ЧТОБЫ ШАРИК
             </button>
 
+            <div>ESC для удалить последний пожамканный шарик</div>
+
             <div ref={containerRef} className='container'>
                 {bubbles.map((value) =>
                     value.currentType === "native" ? (
-                        <Bubble containerRef={containerRef} style={value.style}>
+                        <Bubble
+                            key={value.index}
+                            onMouseDown={() => setLastTake(() => value.index)}
+                            containerRef={containerRef}
+                            style={value.style}
+                        >
                             {value.index} Нативный
                         </Bubble>
                     ) : (
-                        <Draggable key={value.index}>
+                        <Draggable
+                            onMouseDown={() => setLastTake(() => value.index)}
+                            key={value.index}
+                        >
                             <div className='draggable' style={value.style}>
                                 <div>{value.index}</div>
                                 <div>React Draggable</div>
