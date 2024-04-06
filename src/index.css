@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300&display=swap");
+
+* {
+    font-family: roboto;
+}
+
 html,
 body {
     padding: 0;
@@ -9,7 +15,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #c9c9c9;
+    background: #9fafad;
     gap: 16px;
     height: 100vh;
 }
@@ -27,8 +33,10 @@ body {
 .draggable {
     position: absolute;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     min-height: 50px;
     min-width: 50px;
     top: 100px;
@@ -36,6 +44,7 @@ body {
     background: #4aff53;
     border-radius: 333px;
     cursor: grab;
+    user-select: none;
 }
 
 .button {
@@ -43,12 +52,24 @@ body {
     border-radius: 8px;
     background: #4bccff;
     cursor: pointer;
-    padding: 25px 80px;
-    margin: 15px 30px;
+    padding: 8px 80px;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 700;
     outline: none;
     position: relative;
+    transition: all 0.3s;
+}
+
+.link {
+    color: #4aff53;
+}
+
+.button-small {
+    border: none;
+    border-radius: 8px;
+    background: #4bccff;
+    cursor: pointer;
+    padding: 8px;
     transition: all 0.3s;
 }
