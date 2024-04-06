@@ -1,5 +1,5 @@
 <h1> 
-     🐸 Roflo Bubble
+    🎈 Roflo Bubble
 </h1>
 
 <h3>
@@ -48,7 +48,7 @@
  📺 Демо:
 </h2>
 
-- <a href="https://elishaflacon.github.io/roflo-bubble/">Нажать чтобы демо! (Демо еще нет)</a>
+- <a href="https://elishaflacon.github.io/roflo-bubble/">Нажать чтобы демо!</a>
 
 
 
