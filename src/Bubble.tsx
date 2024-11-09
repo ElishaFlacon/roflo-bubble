@@ -14,6 +14,7 @@ interface Props {
     children?: ReactNode;
 }
 
+// Нативаня реализация шариков, сейчас не сипользуется в проекте
 export const Bubble: React.FC<Props> = ({ containerRef, onMouseDown, style, children }) => {
     const boxRef = useRef<HTMLDivElement>(null);
 
